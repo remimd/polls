@@ -1,3 +1,4 @@
+import logging
 from os import getenv
 
 
@@ -15,4 +16,5 @@ match EXEC_PROFILE.lower():
 
 configuration = Configuration.validate()
 
-print(f'Profile set from "{EXEC_PROFILE.title()} Settings"')
+logger = logging.getLogger("uvicorn.configuration")
+logger.warning(f'Profile set from "{EXEC_PROFILE.title()} Settings"')

@@ -27,7 +27,7 @@ class BaseConfiguration(StaticClass, ABC):
     db_password = getenv("DB_PASSWORD", "root")
     db_host = getenv("DB_HOST", "localhost")
     db_port = getenv("DB_PORT", 5432)
-    documentation_endpoint = "/"
+    swagger_endpoint = "/"
     name = pyproject.name.title()
     secret_key = getenv("SECRET_KEY", MISSING)
     time_zone = get_localzone_name()

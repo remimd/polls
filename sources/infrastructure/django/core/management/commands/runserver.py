@@ -277,13 +277,6 @@ class Command(BaseRunServerCommand):
             action="store_true",
             help="Treat APP as an application factory, i.e. a () -> <ASGI app> callable.",
         )
-        parser.add_argument(
-            "-l",
-            "--logs",
-            action="store_true",
-            help="Save custom logs.",
-            dest="save_logs",
-        )
 
     def handle(self, *args, **options):
         options.setdefault("debug", self.DEBUG)

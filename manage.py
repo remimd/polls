@@ -1,5 +1,7 @@
 import sys
 
+from uvicorn import logging # noqa
+
 from sources.infrastructure.setup import setup_project
 
 

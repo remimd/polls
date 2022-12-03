@@ -1,7 +1,6 @@
 [tool.poetry]
-name = "ddd"
+name = "polls"
 version = "0.1.0"
-description = ""
 authors = ["remimd"]
 readme = "README.md"
 

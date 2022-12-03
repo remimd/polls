@@ -320,3 +320,6 @@ cython_debug/
 .fleet/
 .idea/
 .vscode/
+
+# Local Settings
+sources/infrastructure/configurations/local.py

@@ -1,6 +1,7 @@
 [tool.poetry]
 name = "polls"
 version = "0.1.0"
+description = ""
 authors = ["remimd"]
 readme = "README.md"
 
@@ -12,6 +13,8 @@ django-extensions = "^3.2.1"
 psycopg2-binary = "^2.9.5"
 pydantic = "^1.10.2"
 python-dotenv = "^0.21.0"
+toml = "^0.10.2"
+tzlocal = "^4.2"
 uvicorn = "^0.20.0"
 
 [tool.poetry.group.dev.dependencies]
@@ -21,6 +24,7 @@ pytest = "^7.2.0"
 pytest-asyncio = "^0.20.2"
 pytest-cov = "^4.0.0"
 pytest-django = "^4.5.2"
+pytest-env = "^0.8.1"
 
 [build-system]
 requires = ["poetry-core"]

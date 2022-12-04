@@ -1,4 +1,5 @@
-from blacksheep.server.controllers import ApiController
+from blacksheep import created
+from blacksheep.server.controllers import ApiController, post
 
 from sources.application.handlers import PollHandler
 
@@ -12,3 +13,7 @@ class PollsController(ApiController):
     @classmethod
     def class_name(cls) -> str:
         return "polls"
+
+    @post("create")
+    def create(self):
+        return created()

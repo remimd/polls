@@ -1,13 +1,12 @@
 from abc import ABC
 from threading import Lock
-from typing import Optional
 
 
-_lock: Lock = Lock()
+_lock = Lock()
 
 
 class Singleton(ABC):
-    _instance: Optional = None
+    _instance = None
 
     def __new__(cls, *args, **kwargs):
         with _lock:

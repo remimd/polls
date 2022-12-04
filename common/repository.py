@@ -5,10 +5,12 @@ from threading import Lock
 from typing import Optional, Type
 
 
+_lock = Lock()
+
+
 class _RepositoryMeta(ABCMeta):
-    _base: _RepositoryMeta = None
+    _base: RepositoryType = None
     _repositories: dict[RepositoryType, Optional[Repository]] = {}
-    _lock: Lock = Lock()
 
     def __new__(mcs, *args, **kwargs):
         cls = super().__new__(mcs, *args, **kwargs)
@@ -29,15 +31,19 @@ class _RepositoryMeta(ABCMeta):
         return f"<{cls.__name__}>"
 
     @classmethod
+    def get_repository(mcs, interface: RepositoryType) -> Optional[Repository]:
+        return mcs._repositories.get(interface)
+
+    @classmethod
     def _set(mcs, interface: RepositoryType, repository: Repository = None):
         mcs._repositories[interface] = repository
         return mcs
 
     @classmethod
-    def _populate(mcs, cls):
+    def _populate(mcs, cls: RepositoryType):
         is_implementation = False
 
-        with mcs._lock:
+        with _lock:
             for interface, repository in mcs._repositories.items():
                 if not issubclass(cls, interface):
                     continue

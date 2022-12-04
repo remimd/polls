@@ -2,14 +2,12 @@ from abc import ABC
 from threading import Lock
 from typing import Optional
 
-from typing_extensions import Self
-
 
 _lock: Lock = Lock()
 
 
 class Singleton(ABC):
-    _instance: Optional[Self] = None
+    _instance: Optional = None
 
     def __new__(cls, *args, **kwargs):
         with _lock:
@@ -19,7 +17,7 @@ class Singleton(ABC):
         return cls._instance
 
     @classmethod
-    def get_instance(cls) -> Self:
+    def get_instance(cls):
         if not cls._instance:
             cls()
 

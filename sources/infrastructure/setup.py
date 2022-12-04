@@ -1,14 +1,18 @@
 import os
 
-from dotenv import load_dotenv
-
 
 def setup_project():
-    load_dotenv()
+    setup_repositories()
     setup_django()
 
 
-def setup_django():
-    from sources.infrastructure.django.settings import module as django_settings_module
+def setup_repositories():
+    # Import here the repositories you want to use.
+    from .adapters.polls.repositories import PollRepository  # noqa
 
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", django_settings_module)
+
+def setup_django():
+    os.environ.setdefault(
+        "DJANGO_SETTINGS_MODULE",
+        "sources.infrastructure.django.settings",
+    )

@@ -1,7 +1,12 @@
-from abc import ABC
+from abc import ABCMeta
 
 from common.patterns import Singleton
 
 
-class Handler(Singleton, ABC):
+class _HandlerMeta(ABCMeta):
+    def __call__(cls, *args, **kwargs):
+        return super().__call__(*args, **kwargs)
+
+
+class Handler(Singleton, metaclass=_HandlerMeta):
     pass

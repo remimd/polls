@@ -1,13 +1,16 @@
+import logging
+
 from django.core.management import BaseCommand, call_command
 
 
 class Command(BaseCommand):
     help = "Initialize BDD"
+    logger = logging.getLogger("init_bdd")
 
     def handle(self, *args, **options):
-        print("Reset database")
+        self.logger.warning("Reset database")
         call_command("reset_db", "--noinput", "-c")
-        print("Reset successful")
+        self.logger.info("Reset successful")
 
-        print("Apply migrations")
+        self.logger.info("Apply migrations")
         call_command("migrate", interactive=False)

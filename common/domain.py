@@ -7,7 +7,7 @@ class _EntityMeta(ABCMeta):
     def __call__(cls, *args, **kwargs):
         _id = kwargs.pop("id", None)
 
-        instance: Entity = super().__call__(*args, **kwargs)
+        instance = super().__call__(*args, **kwargs)
         instance._id = cls._get_uuid(_id)
 
         return instance

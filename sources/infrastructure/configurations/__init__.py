@@ -1,6 +1,10 @@
 import logging
 from os import getenv
 
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 EXEC_PROFILE = getenv("EXEC_PROFILE", "dev")
 
@@ -16,5 +20,5 @@ match EXEC_PROFILE.lower():
 
 configuration = Configuration.validate()
 
-logger = logging.getLogger("uvicorn.configuration")
-logger.warning(f'Profile set from "{EXEC_PROFILE.title()} Settings"')
+logger = logging.getLogger("configuration")
+logger.warning(f'Profile set from "{EXEC_PROFILE.title()} Configuration"')

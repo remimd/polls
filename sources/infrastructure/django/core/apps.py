@@ -5,4 +5,3 @@ from sources.infrastructure.django.core import module as core_module
 
 class CoreConfig(AppConfig):
     name = core_module
-    verbose_name = "Core"

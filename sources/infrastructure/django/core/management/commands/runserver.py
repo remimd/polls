@@ -16,8 +16,7 @@ from uvicorn.main import (
     WS_CHOICES,
 )
 
-from sources.infrastructure.configurations import configuration
-from sources.infrastructure.server import server_path
+from sources.infrastructure import configuration
 
 
 class Command(BaseRunServerCommand):
@@ -283,7 +282,7 @@ class Command(BaseRunServerCommand):
         options.setdefault("forwarded_allow_ips", self.ALLOWED_IPS)
 
         uvicorn_options = self.parse_uvicorn_options(**options)
-        uvicorn.run(server_path, **uvicorn_options)
+        uvicorn.run("__main__:server", **uvicorn_options)
 
     @staticmethod
     def parse_uvicorn_options(**options) -> dict[str, any]:

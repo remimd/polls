@@ -5,7 +5,7 @@ from typing import Generator
 import pytest
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="class")
 def event_loop() -> Generator[AbstractEventLoop, None, None]:
     policy = asyncio.get_event_loop_policy()
     loop = policy.new_event_loop()

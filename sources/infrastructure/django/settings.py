@@ -1,8 +1,6 @@
-from sources.infrastructure.configurations import configuration
+from sources.infrastructure import configuration
 from sources.infrastructure.django import core
 
-
-module = globals()["__name__"]
 
 BASE_DIR = configuration.base_dir
 

@@ -1,6 +1,4 @@
-from dataclasses import dataclass
-
-from typing_extensions import Self
+from dataclasses import dataclass, field
 
 from common.domain import Entity
 
@@ -10,5 +8,5 @@ class Answer(Entity):
     value: str
 
     @classmethod
-    def create(cls, *args, **kwargs) -> Self:
+    def create(cls, *args, **kwargs):
         return cls(*args, **kwargs)

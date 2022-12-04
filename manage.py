@@ -1,7 +1,6 @@
 import sys
 
-from uvicorn import logging # noqa
-
+from sources.infrastructure.server import Server
 from sources.infrastructure.setup import setup_project
 
 
@@ -12,6 +11,8 @@ def main():
 
     execute_from_command_line(argv=sys.argv)
 
+
+server = Server()
 
 if __name__ == "__main__":
     main()

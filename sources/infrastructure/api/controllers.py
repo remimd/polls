@@ -8,7 +8,7 @@ class PollsController(ApiController):
     poll_handler: PollHandler
 
     def __init__(self):
-        self.poll_handler = PollHandler.get_instance()
+        self.poll_handler = PollHandler()
 
     @classmethod
     def class_name(cls) -> str:

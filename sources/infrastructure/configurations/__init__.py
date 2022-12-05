@@ -20,5 +20,5 @@ match EXEC_PROFILE.lower():
 
 configuration = Configuration.validate()
 
-logger = logging.getLogger("configuration")
-logger.warning(f'Profile set from "{EXEC_PROFILE.title()} Configuration"')
+_logger = logging.getLogger("configuration")
+_logger.warning(f'Profile set from "{EXEC_PROFILE.title()} Configuration"')

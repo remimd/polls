@@ -1,0 +1,45 @@
+name: CI
+on:
+  push:
+    branches:
+      - dev
+      - prod
+  pull_request:
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    env:
+      EXEC_PROFILE: dev
+      DB_NAME: ci_database
+
+    services:
+      db:
+        image: postgres
+        env:
+          POSTGRES_DB: ${{ env.DB_NAME }}
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: root
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Run checkout
+        uses: actions/checkout@v3
+
+      - name: Set up environment
+        uses: ./.github/actions/environment
+
+      - name: Django
+        uses: ./.github/actions/django
+
+      - name: Check code style
+        uses: ./.github/actions/code-style
+
+      - name: Tests
+        uses: ./.github/actions/tests

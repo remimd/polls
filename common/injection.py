@@ -18,9 +18,7 @@ def _implements(cls: Type, parents: tuple[Type, ...]):
             continue
 
         if injectable:
-            raise RuntimeError(
-                f"Multiple implementations for {reference.__name__}."
-            )
+            raise RuntimeError(f"Multiple implementations for {reference.__name__}.")
 
         _set(reference, cls())
         break

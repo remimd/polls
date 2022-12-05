@@ -14,10 +14,10 @@ class Server(BaseServer):
             debug=configuration.debug,
             show_error_details=configuration.debug,
         )
-        self._setup_swagger()
+        self.setup_swagger()
         from .api import controllers  # noqa
 
-    def _setup_swagger(self):
+    def setup_swagger(self):
         swagger = OpenAPIHandler(
             info=Info(title=configuration.name, version=configuration.version),
             anonymous_access=configuration.debug,

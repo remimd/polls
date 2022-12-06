@@ -5,8 +5,6 @@ from sources.application.handlers import PollHandler
 
 
 class PollsController(ApiController):
-    poll_handler: PollHandler
-
     def __init__(self):
         self.poll_handler = PollHandler()
 
@@ -16,5 +14,5 @@ class PollsController(ApiController):
 
     @post("create")
     async def create(self):
-        # TODO
+        self.poll_handler.create("")
         return created()

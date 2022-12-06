@@ -5,7 +5,8 @@ from typing import Any, Iterator, Callable, Optional, Type
 
 
 _lock = Lock()
-_injectables = dict()
+
+_injectables = {}
 
 
 def _set(reference: Type, injectable=None):

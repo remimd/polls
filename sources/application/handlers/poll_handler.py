@@ -1,13 +1,14 @@
-from common.handler import Handler
-from sources.application.interfaces.polls.repositories import IPollRepository
+from typing import Type
+
+from sources.application.protocols.polls.repositories import PPollRepository
 from sources.domains.polls.entities import Poll
 
 
-class PollHandler(Handler):
-    def __init__(self, poll_repository: IPollRepository):
-        self.poll_repository = poll_repository
+class PollHandler:
+    def __init__(self, poll_repository: Type[PPollRepository]):
+        self.poll_repository = poll_repository()
 
-    def create(self, question: str) -> Poll:
+    async def create(self, question: str) -> Poll:
         poll = Poll.create(question)
-        self.poll_repository.add(poll)
+        await self.poll_repository.add(poll)
         return poll

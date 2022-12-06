@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 
-from common.domain import Entity
+from common.entity import Entity
 from sources.domains.polls.entities import Answer
 from sources.domains.polls.value_objects import Tag
 

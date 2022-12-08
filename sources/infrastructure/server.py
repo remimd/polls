@@ -17,10 +17,9 @@ class Server(BaseServer):
         )
 
         self.setup_swagger()
-        self.setup_error_handlers()
-        self.setup_imports()
+        self.setup_exceptions_handlers()
 
-    def setup_error_handlers(self):
+    def setup_exceptions_handlers(self):
         self.exceptions_handlers[UnprocessableError] = validation_handler
 
     def setup_swagger(self):
@@ -31,12 +30,6 @@ class Server(BaseServer):
         )
         swagger.bind_app(self)
 
-    @staticmethod
-    def setup_imports():
-        from .django import asgi  # noqa
-        from .api import controllers  # noqa
 
-
-async def validation_handler(self, request, exc: UnprocessableError) -> Response:
-    assert isinstance(exc, UnprocessableError)
+async def validation_handler(server, request, exc: UnprocessableError) -> Response:
     return pretty_json(status=422, data=exc.errors)

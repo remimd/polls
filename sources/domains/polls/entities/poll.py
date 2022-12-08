@@ -15,14 +15,16 @@ class Poll(Entity):
     def create(cls, *args, **kwargs):
         return cls(*args, **kwargs)
 
-    def add_answer(self, answer: Answer):
+    def add_answer(self, answer: Answer | str):
+        if isinstance(answer, str):
+            answer = Answer.create(answer)
+
         self.answers.append(answer)
         return self
 
-    def add_tag(self, tag: Tag):
-        self.tags.add(tag)
-        return self
+    def add_tag(self, tag: Tag | str):
+        if isinstance(tag, str):
+            tag = Tag.create(tag)
 
-    def remove_tag(self, tag: Tag):
-        self.tags.remove(tag)
+        self.tags.add(tag)
         return self

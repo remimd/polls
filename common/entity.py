@@ -4,12 +4,9 @@ from uuid import UUID, uuid4
 
 
 class _EntityMeta(ABCMeta):
-    def __call__(cls, *args, **kwargs):
-        _id = kwargs.pop("id", None)
-
+    def __call__(cls, *args, id: UUID | str = None, **kwargs):  # noqa
         instance = super().__call__(*args, **kwargs)
-        instance._id = cls._get_uuid(_id)
-
+        instance._id = cls._get_uuid(id)
         return instance
 
     @staticmethod
@@ -17,7 +14,7 @@ class _EntityMeta(ABCMeta):
         if isinstance(uuid, UUID):
             return uuid
 
-        if uuid is None:
+        if not uuid:
             return uuid4()
 
         return UUID(uuid)

@@ -6,6 +6,6 @@ class Tag:
     value: str
 
     @classmethod
-    def create(cls, value: str, *args, **kwargs):
+    def create(cls, value: str):
         value = value.lower()
-        return cls(value, *args, **kwargs)
+        return cls(value)

@@ -18,6 +18,9 @@ set -e
 title "POETRY"
 poetry check
 
+title "MIGRATIONS"
+python manage.py makemigrations --check --dry-run
+
 title "BLACK"
 black ./
 

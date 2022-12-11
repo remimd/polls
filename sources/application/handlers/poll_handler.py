@@ -1,4 +1,4 @@
-from typing import Type, Iterable
+from typing import Iterable
 
 from sources.application.protocols.polls.repositories import PPollRepository
 from sources.domains.polls.entities import Poll
@@ -11,8 +11,8 @@ class PollHandler:
     async def create(
         self,
         question: str,
-        answers: Iterable[str] = tuple(),
-        tags: Iterable[str] = tuple(),
+        answers: Iterable[str] = (),
+        tags: Iterable[str] = (),
     ) -> Poll:
         poll = Poll.create(question)
 

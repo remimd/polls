@@ -29,19 +29,19 @@ class Server(BaseServer):
         self.exceptions_handlers[exception] = handler
 
     def setup_error_handlers(self):
-        from . import error_handlers
+        from .error import handlers
 
-        handlers = inspect.getmembers(error_handlers, self.is_error_handler)
+        members = inspect.getmembers(handlers, self.is_error_handler)
 
-        for _, handler in handlers:
-            signature = inspect.signature(handler)
+        for _, function in members:
+            signature = inspect.signature(function)
             parameter = tuple(signature.parameters.values())[2]
             exception = parameter.annotation
 
             if not issubclass(exception, BaseException):
                 raise TypeError(f"`{exception.__name__}` isn't a valid exception.")
 
-            self.add_error_handler(exception, handler)
+            self.add_error_handler(exception, function)
 
     def setup_swagger(self):
         swagger = OpenAPIHandler(

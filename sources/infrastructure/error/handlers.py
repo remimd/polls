@@ -1,6 +1,6 @@
 from blacksheep import Request, Response, pretty_json
 
-from common.exceptions import UnprocessableError
+from sources.infrastructure.error.exceptions import UnprocessableError
 from sources.infrastructure.server import Server
 
 

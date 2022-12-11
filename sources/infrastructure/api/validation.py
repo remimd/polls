@@ -1,7 +1,7 @@
-from common.validator import Validator
+from .basis import Validator
 
 
 class PollCreation(Validator):
     question: str
-    answers: tuple[str, ...]
-    tags: tuple[str, ...]
+    answers: tuple[str, ...] = ()
+    tags: tuple[str, ...] = ()

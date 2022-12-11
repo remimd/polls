@@ -2,8 +2,6 @@ from sources.infrastructure import configuration
 from sources.infrastructure.django import core
 
 
-BASE_DIR = configuration.base_dir
-
 DEBUG = configuration.debug
 
 INSTALLED_APPS = core.module, "django_extensions"

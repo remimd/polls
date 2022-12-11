@@ -1,4 +1,5 @@
 from dataclasses import dataclass, fields
+from pathlib import Path
 from typing import Iterator, final
 
 import toml
@@ -12,7 +13,9 @@ class _PyProject:
 
     @classmethod
     def read(cls):
-        with open("pyproject.toml") as file:
+        path = Path(__file__).resolve().parent.parent / "pyproject.toml"
+
+        with open(path) as file:
             data = toml.load(file)
 
         info = data["tool"]["poetry"]

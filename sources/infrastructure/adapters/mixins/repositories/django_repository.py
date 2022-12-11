@@ -6,9 +6,9 @@ from django.db.models import Model, Q, QuerySet
 
 class DjangoRepositoryMixin(ABC):
     @staticmethod
-    def is_unique_field(model: Type[Model], field: str):
-        attribute = getattr(model, field)
-        return attribute.field.unique or attribute.field.primary_key
+    def is_unique_field(model: Type[Model], field: str) -> bool:
+        attr = getattr(model, field)
+        return attr.field.unique
 
     @staticmethod
     def get_by_values(model: Type[Model], field: str, *values) -> QuerySet:
@@ -28,26 +28,27 @@ class DjangoRepositoryMixin(ABC):
     def get_or_create_multiple(
         cls,
         model: Type[Model],
-        pk_or_unique_field: str,
+        unique_field: str,
         *values,
-        **kwargs,
+        **creation_params,
     ) -> list[Model]:
-        if not cls.is_unique_field(model, pk_or_unique_field):
-            raise ValueError(f"Field `{pk_or_unique_field}` isn't unique.")
+        if not cls.is_unique_field(model, unique_field):
+            raise ValueError(f"Field `{unique_field}` isn't unique.")
 
-        existing = list(cls.get_by_values(model, pk_or_unique_field, *values))
+        existing = list(cls.get_by_values(model, unique_field, *values))
         missing = []
 
         for value in values:
             for obj in existing:
-                if value == getattr(obj, pk_or_unique_field):
+                if value == getattr(obj, unique_field):
                     break
             else:
-                parameters = kwargs | {pk_or_unique_field: value}
+                parameters = creation_params | {unique_field: value}
                 obj = model(**parameters)
                 missing.append(obj)
 
         if missing:
             model.objects.bulk_create(missing)
+            return existing + missing
 
-        return existing + missing
+        return existing

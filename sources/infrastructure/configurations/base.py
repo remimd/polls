@@ -1,5 +1,5 @@
+from abc import ABC
 from os import getenv
-from pathlib import Path
 
 from tzlocal import get_localzone_name
 
@@ -7,9 +7,8 @@ from common.configuration import Configuration, MISSING
 from sources.pyproject import pyproject
 
 
-class BaseConfiguration(Configuration):
+class BaseConfiguration(Configuration, ABC):
     allowed_hosts = ("127.0.0.1", "localhost")
-    base_dir = Path(__file__).resolve().parent.parent.parent.parent
     debug = False
     db_name = getenv("DB_NAME", MISSING)
     db_user = getenv("DB_USER", "root")

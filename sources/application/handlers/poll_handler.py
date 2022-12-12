@@ -11,8 +11,8 @@ class PollHandler:
     async def create(
         self,
         question: str,
-        answers: Iterable[str] = (),
-        tags: Iterable[str] = (),
+        answers: Iterable[str],
+        tags: Iterable[str],
     ) -> Poll:
         poll = Poll.create(question)
 
@@ -24,3 +24,6 @@ class PollHandler:
 
         await self.poll_repository.add(poll)
         return poll
+
+    async def get(self, poll_id: str) -> Poll:
+        return await self.poll_repository.get(poll_id)

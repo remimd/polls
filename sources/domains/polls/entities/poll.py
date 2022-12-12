@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from typing import Iterator
 
 from common.entity import Entity
 from sources.domains.polls.entities import Answer
@@ -14,6 +15,11 @@ class Poll(Entity):
     @classmethod
     def create(cls, *args, **kwargs):
         return cls(*args, **kwargs)
+
+    @property
+    def tag_values(self) -> Iterator[str]:
+        for tag in self.tags:
+            yield tag.value
 
     def add_answer(self, answer: Answer | str):
         if isinstance(answer, str):

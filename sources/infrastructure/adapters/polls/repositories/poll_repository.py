@@ -1,7 +1,7 @@
 from asgiref.sync import sync_to_async
 from django.db import transaction
 
-from sources.domains.polls.entities import Poll
+from sources.domains.polls.entities import Answer, Poll
 from sources.infrastructure.adapters.mixins.repositories import DjangoRepositoryMixin
 from sources.infrastructure.django.core.models import AnswerORM, PollORM, TagORM
 
@@ -10,11 +10,14 @@ class PollRepository(DjangoRepositoryMixin):
     async def add(self, poll: Poll):
         return await sync_to_async(self._add)(poll)
 
+    async def get(self, poll_id: str) -> Poll:
+        return await sync_to_async(self._get)(poll_id)
+
     @transaction.atomic
     def _add(self, poll: Poll):
         poll_orm = PollORM.objects.create(id=poll.id, question=poll.question)
 
-        if tag_values := tuple(tag.value for tag in poll.tags):
+        if tag_values := tuple(poll.tag_values):
             tags_orm = self.get_or_create_multiple(TagORM, "value", *tag_values)
             poll_orm.tags.add(*tags_orm)
 
@@ -28,3 +31,19 @@ class PollRepository(DjangoRepositoryMixin):
                 for answer in answers
             )
             AnswerORM.objects.bulk_create(answers_orm)
+
+    def _get(self, poll_id: str) -> Poll:
+        poll_orm = PollORM.objects.prefetch_related("answers", "tags").get(id=poll_id)
+        answers_orm = poll_orm.answers.all()
+        tags_orm = poll_orm.tags.all()
+
+        poll = Poll.create(id=poll_orm.id, question=poll_orm.question)
+
+        for answer_orm in answers_orm:
+            answer = Answer.create(id=answer_orm.id, value=answer_orm.value)
+            poll.add_answer(answer)
+
+        for tag_orm in tags_orm:
+            poll.add_tag(tag_orm.value)
+
+        return poll

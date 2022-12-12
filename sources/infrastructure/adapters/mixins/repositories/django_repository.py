@@ -35,7 +35,8 @@ class DjangoRepositoryMixin(ABC):
         if not cls.is_unique_field(model, unique_field):
             raise ValueError(f"Field `{unique_field}` isn't unique.")
 
-        existing = list(cls.get_by_values(model, unique_field, *values))
+        queryset = cls.get_by_values(model, unique_field, *values)
+        existing = list(queryset)
         missing = []
 
         for value in values:

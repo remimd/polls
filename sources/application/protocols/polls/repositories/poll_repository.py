@@ -9,3 +9,6 @@ class PPollRepository(Protocol):
 
     async def get(self, poll_id: str) -> Poll:
         ...
+
+    async def remove(self, poll_id: str):
+        ...

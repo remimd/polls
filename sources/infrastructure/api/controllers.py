@@ -1,5 +1,5 @@
-from blacksheep import FromJSON, Response, pretty_json
-from blacksheep.server.controllers import ApiController, get, post
+from blacksheep import FromJSON, Response, no_content, pretty_json
+from blacksheep.server.controllers import ApiController, delete, get, post
 
 from sources.application.handlers import PollHandler
 from sources.infrastructure.adapters.polls.repositories import PollRepository
@@ -29,3 +29,8 @@ class PollsController(ApiController):
         poll = await self.poll_handler.get(id)
         data = PollSerializer.transform(poll)
         return pretty_json(data=data)
+
+    @delete(":id")
+    async def remove_poll(self, id: str) -> Response:  # noqa
+        await self.poll_handler.remove(id)
+        return no_content()

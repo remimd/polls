@@ -27,3 +27,6 @@ class PollHandler:
 
     async def get(self, poll_id: str) -> Poll:
         return await self.poll_repository.get(poll_id)
+
+    async def remove(self, poll_id: str):
+        await self.poll_repository.remove(poll_id)

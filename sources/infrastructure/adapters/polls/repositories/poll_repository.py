@@ -13,6 +13,9 @@ class PollRepository(DjangoRepositoryMixin):
     async def get(self, poll_id: str) -> Poll:
         return await sync_to_async(self._get)(poll_id)
 
+    async def remove(self, poll_id: str):
+        return await sync_to_async(self._remove)(poll_id)
+
     @transaction.atomic
     def _add(self, poll: Poll):
         poll_orm = PollORM.objects.create(id=poll.id, question=poll.question)
@@ -47,3 +50,9 @@ class PollRepository(DjangoRepositoryMixin):
             poll.add_tag(tag_orm.value)
 
         return poll
+
+    def _remove(self, poll_id: str):
+        deleted, _ = PollORM.objects.filter(id=poll_id).delete()
+
+        if deleted == 0:
+            raise PollORM.DoesNotExist(f"Poll with id: `{poll_id}` doesn't exist.")

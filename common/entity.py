@@ -25,7 +25,7 @@ class Entity(metaclass=_EntityMeta):
 
     def __eq__(self, other: Any) -> bool:
         is_same_class = self.__class__ == other.__class__
-        return self.id == other.id if is_same_class else False
+        return is_same_class and self.id == other.id
 
     @property
     def id(self) -> UUID:

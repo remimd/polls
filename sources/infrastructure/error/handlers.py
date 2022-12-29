@@ -1,7 +1,11 @@
-from blacksheep import Request, Response, not_found, pretty_json
+from blacksheep import Request, Response, not_found, pretty_json, unauthorized
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError
 
-from sources.infrastructure.error.exceptions import UnprocessableError
+from ..exceptions import (
+    InvalidCredentialsError,
+    UnprocessableError,
+)
 from sources.infrastructure.server import Server
 
 
@@ -13,7 +17,7 @@ async def validation_handler(
     request: Request,
     exception: UnprocessableError,
 ) -> Response:
-    return pretty_json(status=422, data=exception.errors)
+    return pretty_json(status=422, data=exception.content)
 
 
 async def not_found_handler(
@@ -22,3 +26,19 @@ async def not_found_handler(
     exception: ObjectDoesNotExist,
 ) -> Response:
     return not_found()
+
+
+async def invalid_credentials_handler(
+    server: Server,
+    request: Request,
+    exception: InvalidCredentialsError,
+) -> Response:
+    return unauthorized("Invalid credentials.")
+
+
+async def conflict_handler(
+    server: Server,
+    request: Request,
+    exception: IntegrityError,
+) -> Response:
+    return Response(409)

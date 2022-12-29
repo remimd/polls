@@ -2,7 +2,7 @@ from abc import ABC
 
 from pydantic import BaseModel, ValidationError
 
-from sources.infrastructure.error.exceptions import UnprocessableError
+from sources.infrastructure.exceptions import UnprocessableError
 
 
 class Validator(BaseModel, ABC):

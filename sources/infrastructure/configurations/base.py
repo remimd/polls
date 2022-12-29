@@ -3,7 +3,7 @@ from os import getenv
 
 from tzlocal import get_localzone_name
 
-from common.configuration import Configuration, MISSING
+from common.infrastructure.configuration import Configuration, MISSING
 from sources.pyproject import pyproject
 
 

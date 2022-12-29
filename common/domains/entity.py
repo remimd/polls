@@ -23,6 +23,10 @@ class _EntityMeta(ABCMeta):
 class Entity(metaclass=_EntityMeta):
     _id: UUID
 
+    def __str__(self) -> str:
+        class_name = self.__class__.__name__
+        return f"{class_name} {self.id}"
+
     def __eq__(self, other: Any) -> bool:
         is_same_class = self.__class__ == other.__class__
         return is_same_class and self.id == other.id

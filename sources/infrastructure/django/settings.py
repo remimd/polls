@@ -1,10 +1,16 @@
 from sources.infrastructure import configuration
-from sources.infrastructure.django import core
+from sources.infrastructure.django.core import module as core_module
 
 
 DEBUG = configuration.debug
 
-INSTALLED_APPS = core.module, "django_extensions"
+INSTALLED_APPS = (
+    core_module,
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django_extensions",
+    "phonenumber_field",
+)
 
 DATABASES = {
     "default": {
@@ -22,3 +28,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SECRET_KEY = configuration.secret_key
 
 TIME_ZONE = configuration.time_zone
+
+# User Model
+# https://docs.djangoproject.com/en/4.1/topics/auth/customizing/#auth-custom-user
+AUTH_USER_MODEL = "core.UserORM"
+
+# Phone number config
+PHONENUMBER_DEFAULT_FORMAT = "INTERNATIONAL"

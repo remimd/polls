@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from common.entity import Entity
+from common.domains.entity import Entity
 
 
 @dataclass(eq=False)

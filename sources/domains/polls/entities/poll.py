@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Iterator
 
-from common.entity import Entity
+from common.domains.entity import Entity
 from sources.domains.polls.entities import Answer
 from sources.domains.polls.value_objects import Tag
 

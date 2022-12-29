@@ -1,18 +1,34 @@
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 from django.db.models import Model
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 """ ABSTRACT MODELS """
 
 
 class EntityORM(Model):
-    id = models.CharField(max_length=256, primary_key=True)
+    id = models.CharField(max_length=256, primary_key=True, db_index=True)
 
     class Meta:
         abstract = True
+        ordering = ("id",)
 
 
 """ MODELS """
+
+
+class UserORM(AbstractBaseUser, EntityORM):
+    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=150, blank=True, null=True)
+    last_name = models.CharField(max_length=150, blank=True, null=True)
+    phone = PhoneNumberField(unique=True, blank=True, null=True)
+
+    USERNAME_FIELD = "email"
+
+    class Meta:
+        db_table = "user"
+        verbose_name = "user"
 
 
 class TagORM(Model):
@@ -20,6 +36,7 @@ class TagORM(Model):
 
     class Meta:
         db_table = "tag"
+        verbose_name = "tag"
 
 
 class PollORM(EntityORM):
@@ -28,6 +45,7 @@ class PollORM(EntityORM):
 
     class Meta:
         db_table = "poll"
+        verbose_name = "poll"
 
 
 class AnswerORM(EntityORM):
@@ -36,3 +54,4 @@ class AnswerORM(EntityORM):
 
     class Meta:
         db_table = "answer"
+        verbose_name = "answer"

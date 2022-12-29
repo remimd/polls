@@ -1,15 +1,14 @@
 import sys
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Iterable
+from typing import Any, Iterable, Protocol
 
 
-class CommandManager(ABC):
-    @abstractmethod
+class CommandManager(Protocol):
     def execute(self, *args, **kwargs):
-        raise NotImplementedError
+        ...
 
 
-class Component(ABC):
+class Component(Protocol):
     def setup(self):
         ...
 
@@ -17,7 +16,7 @@ class Component(ABC):
 class Server(ABC):
     def __init__(
         self,
-        application: Callable | str,
+        application: Any,
         manager: CommandManager = None,
         components: Iterable[Component] = (),
     ):
@@ -26,12 +25,13 @@ class Server(ABC):
         self.components = components
         self._setup()
 
-    def run(self):
+    def run(self, **kwargs):
+        argv = sys.argv
+
         if self.manager:
-            argv = sys.argv
-            self.manager.execute(*argv)
+            self.manager.execute(*argv, **kwargs)
         else:
-            self.start()
+            self.start(*argv, **kwargs)
 
     @abstractmethod
     def start(self, *args, **kwargs) -> Any:

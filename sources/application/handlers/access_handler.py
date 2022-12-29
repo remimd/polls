@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Optional
 
 from sources.application.protocols.access import PAuthentication
 from sources.application.protocols.access.repositories import PUserRepository
@@ -24,3 +24,10 @@ class AccessHandler:
 
     async def refresh(self, *args, **kwargs) -> Any:
         return await self.authentication.refresh(*args, **kwargs)
+
+    async def get_user(
+        self,
+        user_id: str,
+        no_exception: bool = False,
+    ) -> User | Optional[User]:
+        return await self.user_repository.get(user_id, no_exception)

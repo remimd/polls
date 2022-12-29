@@ -6,7 +6,7 @@ from common.infrastructure.server import Server
 
 
 class UvicornServer(Server):
-    def start(self, **options):
+    def start(self, /, **options):
         uvicorn_options = self._parse_options(**options)
         uvicorn.run(self.application, **uvicorn_options)
 

@@ -1,11 +1,13 @@
 from sources.infrastructure import configuration
-from sources.infrastructure.django.core import module as core_module
+from sources.infrastructure.command import module as command_module
+from sources.infrastructure.orm import module as orm_module
 
 
 DEBUG = configuration.debug
 
 INSTALLED_APPS = (
-    core_module,
+    command_module,
+    orm_module,
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django_extensions",
@@ -31,7 +33,7 @@ TIME_ZONE = configuration.time_zone
 
 # User Model
 # https://docs.djangoproject.com/en/4.1/topics/auth/customizing/#auth-custom-user
-AUTH_USER_MODEL = "core.UserORM"
+AUTH_USER_MODEL = "orm.UserORM"
 
 # Phone number config
 PHONENUMBER_DEFAULT_FORMAT = "INTERNATIONAL"

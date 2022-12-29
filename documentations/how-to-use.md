@@ -3,7 +3,7 @@
 ## Start server
 
 ```bash
-uvicorn manage:server
+uvicorn manage:server.application
 # or
 python manage.py runserver
 ```

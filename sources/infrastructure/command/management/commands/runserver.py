@@ -1,8 +1,8 @@
-import inspect
+from __main__ import server
+
 import ssl
 
 import click
-import uvicorn
 from django.core.management import CommandParser
 from django.core.management.commands.runserver import Command as BaseRunServerCommand
 from h11._connection import DEFAULT_MAX_INCOMPLETE_EVENT_SIZE
@@ -280,16 +280,4 @@ class Command(BaseRunServerCommand):
     def handle(self, *args, **options):
         options.setdefault("debug", self.DEBUG)
         options.setdefault("forwarded_allow_ips", self.ALLOWED_IPS)
-
-        uvicorn_options = self.parse_uvicorn_options(**options)
-        uvicorn.run("__main__:server", **uvicorn_options)
-
-    @staticmethod
-    def parse_uvicorn_options(**options) -> dict[str, any]:
-        signature = inspect.signature(uvicorn.Config)
-        keys = tuple(
-            parameter.name
-            for parameter in signature.parameters.values()
-            if parameter.kind == parameter.POSITIONAL_OR_KEYWORD
-        )
-        return {key: value for key in keys if (value := options.get(key)) is not None}
+        server.start(**options)

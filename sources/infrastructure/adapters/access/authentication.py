@@ -6,7 +6,6 @@ from django.contrib.auth.backends import UserModel
 from sources.infrastructure.exceptions import InvalidCredentialsError
 from sources.infrastructure.utils.jwt import (
     generate_authentication_tokens,
-    validate_refresh,
 )
 
 
@@ -16,8 +15,8 @@ class Authentication:
     async def login(self, username: str, password: str) -> dict[str, str]:
         return await sync_to_async(self._login)(username, password)
 
-    async def refresh(self, refresh_token: str, pk: Any) -> dict[str, str]:
-        return await sync_to_async(self._refresh)(refresh_token, pk)
+    async def refresh(self, refresh_token: str, user_pk: Any) -> dict[str, str]:
+        return await sync_to_async(self._refresh)(refresh_token, user_pk)
 
     def _login(self, username: str, password: str) -> dict[str, str]:
         options = {self.USERNAME_FIELD: username}
@@ -34,5 +33,5 @@ class Authentication:
         authentication_tokens = generate_authentication_tokens(data)
         return authentication_tokens.encode()
 
-    def _refresh(self, refresh_token: str, pk: Any) -> dict[str, str]:
-        validate_refresh(refresh_token, {"pk": pk})
+    def _refresh(self, refresh_token: str, user_pk: Any) -> dict[str, str]:
+        ...

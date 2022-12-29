@@ -3,7 +3,7 @@ from django.db import transaction
 
 from sources.domains.polls.entities import Answer, Poll
 from sources.infrastructure.adapters.mixins.repositories import DjangoRepositoryMixin
-from sources.infrastructure.django.core.models import AnswerORM, PollORM, TagORM
+from sources.infrastructure.orm.models import AnswerORM, PollORM, TagORM
 
 
 class PollRepository(DjangoRepositoryMixin):

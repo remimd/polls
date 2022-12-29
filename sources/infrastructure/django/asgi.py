@@ -1,8 +1,11 @@
+import os
+
 from django.core.asgi import get_asgi_application
 
-from sources.infrastructure.setup import setup_django
 
-
-setup_django()
+os.environ.setdefault(
+    "DJANGO_SETTINGS_MODULE",
+    "sources.infrastructure.django.settings",
+)
 
 application = get_asgi_application()

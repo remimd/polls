@@ -1,1 +1,1 @@
-module = globals()["__name__"]
+module = __name__

@@ -1,5 +1,3 @@
-from __main__ import server
-
 import ssl
 
 import click
@@ -280,4 +278,10 @@ class Command(BaseRunServerCommand):
     def handle(self, *args, **options):
         options.setdefault("debug", self.DEBUG)
         options.setdefault("forwarded_allow_ips", self.ALLOWED_IPS)
+
+        try:
+            from __main__ import server
+        except ImportError:
+            from manage import server
+
         server.start(**options)

@@ -1,4 +1,4 @@
 from .manager import CommandManager
 
 
-module = globals()["__name__"]
+module = __name__

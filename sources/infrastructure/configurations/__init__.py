@@ -1,7 +1,13 @@
+from __future__ import annotations
+
 import logging
 from os import getenv
+from typing import TYPE_CHECKING
 
 from dotenv import load_dotenv
+
+if TYPE_CHECKING:
+    from .base import BaseConfiguration
 
 
 load_dotenv()
@@ -18,7 +24,7 @@ match EXEC_PROFILE.lower():
     case _:
         raise RuntimeError("No suitable configuration found.")
 
-configuration = Configuration.verify()
+configuration: BaseConfiguration = Configuration.verify()
 
 _logger = logging.getLogger("configuration")
 _logger.warning(f'Profile set from "{EXEC_PROFILE.title()} Configuration"')
